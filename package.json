@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npx prisma generate",
+    "prisma:migrate": "npm run postinstall && npx prisma migrate dev",
+    "prisma:docker": "npm run prisma:migrate & npx prisma studio",
+    "dev:docker": "npm run prisma:docker & npm run dev"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
