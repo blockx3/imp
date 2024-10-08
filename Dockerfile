@@ -6,7 +6,6 @@ FROM base AS installer
 WORKDIR /usr/src/app
 RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
-COPY prisma ./prisma
 
 RUN \
     if [ -f package-lock.json ]; then \
@@ -20,9 +19,9 @@ FROM base AS builder
 WORKDIR /usr/src/app
 
 COPY --from=installer /usr/src/app/node_modules ./node_modules
-COPY --from=installer /usr/src/app/prisma ./prisma
+COPY prisma ./prisma
 
-RUN DATABASE_URL=$DATABASE_URL npx prisma generate
+RUN npx prisma generate
 
 COPY . .
 
