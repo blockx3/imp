@@ -1,0 +1,28 @@
+{
+  "name": "@repo/database",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsup src/index.ts --minify --dts --out-dir dist",
+    "dev": "tsup src/index.ts --watch --dts --out-dir dist",
+    "prisma:generate": "prisma generate --schema ./prisma/schema_mongo.prisma & prisma generate --schema ./prisma/schema_pg.prisma",
+    "prisma:migrate:pg": "prisma migrate dev --schema ./prisma/schema_pg.prisma"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "@repo/typescript-config": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "prisma": "^5.20.0",
+    "tsup": "^8.3.0"
+  }
+}

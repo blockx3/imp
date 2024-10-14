@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/mongo_client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_DATABASE_URL")
+}
+
+model idea {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  author_username String
+  author_user_Id  String
+  media           Json?
+  upvotes_count   Int             @default(0)
+  downvotes_count Int             @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  idea_comments   idea_comments[]
+  upvotes         upvotes[]
+  downvotes       downvotes[]
+}
+
+model idea_comments {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  author_username String
+  author_user_Id  String
+  content         String
+  upvotes_count   Int         @default(0)
+  downvotes_count Int         @default(0)
+  media           Json?
+  idea            idea        @relation(fields: [ideaId], references: [id])
+  ideaId          String      @db.ObjectId
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  upvotes         upvotes[]
+  downvotes       downvotes[]
+}
+
+enum POST_TYPE {
+  COMMON_POST
+  COMMENT_POST
+}
+
+model upvotes {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  author_username String
+  author_user_Id  String
+  POST_TYPE       POST_TYPE
+  createdAt       DateTime       @default(now())
+  idea            idea?          @relation(fields: [ideaId], references: [id])
+  ideaId          String?        @db.ObjectId
+  comment         idea_comments? @relation(fields: [commentId], references: [id])
+  commentId       String?        @db.ObjectId
+}
+
+model downvotes {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  author_username String
+  author_user_Id  String
+  POST_TYPE       POST_TYPE
+  createdAt       DateTime       @default(now())
+  idea            idea?          @relation(fields: [ideaId], references: [id])
+  ideaId          String?        @db.ObjectId
+  comment         idea_comments? @relation(fields: [commentId], references: [id])
+  commentId       String?        @db.ObjectId
+}
