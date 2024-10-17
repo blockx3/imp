@@ -4,6 +4,12 @@ import UserSection from "./UserSection";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import PostDialog from "./PostDialog";
+
 async function Explore() {
   const temp = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -27,9 +33,14 @@ async function Explore() {
               className="m-2 p-4 bg-neutral-700 text-neutral-300 rounded-lg space-y-4"
               key={index}
             >
-              <div className="font-bold text-3xl underline underline-offset-4">
-                Title
-              </div>
+              <Dialog>
+                <DialogTrigger>
+                  <div className="font-bold text-3xl underline underline-offset-4">
+                    Title
+                  </div>
+                </DialogTrigger>
+                <PostDialog/>
+              </Dialog>
               <div className="text-lg">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Facilis, iste amet sint sequi voluptate velit. Esse eum
