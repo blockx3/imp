@@ -26,7 +26,7 @@ async function Explore() {
           </Link>
         </div>
       </div>
-      <div className="lg:col-span-2 border-l-2 border-r-2 border-neutral-600/80 max-h-screen overflow-auto no-scrollbar">
+      <div className="lg:col-span-2 border-l-2 border-r-2 border-neutral-600/80 max-h-screen overflow-auto no-scrollbar relative">
         {temp.map((d, index) => {
           return (
             <Dialog>
@@ -50,6 +50,7 @@ async function Explore() {
             </Dialog>
           );
         })}
+        <div className="sticky w-full h-[15vh] bottom-0 bg-gradient-to-t from-[#262626] drop-shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]"></div>
       </div>
       <div className="lg:col-span-1">Filters & Announcements</div>
     </div>
