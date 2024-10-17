@@ -31,9 +31,8 @@ async function Explore() {
           return (
             <Dialog>
               <DialogTrigger>
-                <PostDialog/>
                 <div
-                  className="m-2 p-4 bg-neutral-700 text-neutral-300 rounded-lg space-y-4"
+                  className="m-2 p-4 bg-neutral-700 text-neutral-300 rounded-lg space-y-4 text-left"
                   key={index}
                 >
                   <div className="font-bold text-3xl underline underline-offset-4">
@@ -47,6 +46,7 @@ async function Explore() {
                   </div>
                 </div>
               </DialogTrigger>
+              <PostDialog/>
             </Dialog>
           );
         })}
