@@ -29,25 +29,25 @@ async function Explore() {
       <div className="lg:col-span-2 border-l-2 border-r-2 border-neutral-600/80 max-h-screen overflow-auto no-scrollbar">
         {temp.map((d, index) => {
           return (
-            <div
-              className="m-2 p-4 bg-neutral-700 text-neutral-300 rounded-lg space-y-4"
-              key={index}
-            >
-              <Dialog>
-                <DialogTrigger>
+            <Dialog>
+              <DialogTrigger>
+                <PostDialog/>
+                <div
+                  className="m-2 p-4 bg-neutral-700 text-neutral-300 rounded-lg space-y-4"
+                  key={index}
+                >
                   <div className="font-bold text-3xl underline underline-offset-4">
                     Title
                   </div>
-                </DialogTrigger>
-                <PostDialog/>
-              </Dialog>
-              <div className="text-lg">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Facilis, iste amet sint sequi voluptate velit. Esse eum
-                repellat, et vero, eveniet iure unde, praesentium adipisci
-                expedita voluptatum corporis error eius.
-              </div>
-            </div>
+                  <div className="text-lg">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Facilis, iste amet sint sequi voluptate velit. Esse eum
+                    repellat, et vero, eveniet iure unde, praesentium adipisci
+                    expedita voluptatum corporis error eius.
+                  </div>
+                </div>
+              </DialogTrigger>
+            </Dialog>
           );
         })}
       </div>
