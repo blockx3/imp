@@ -16,6 +16,7 @@ datasource db {
 
 model idea {
   id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  serial_number   Int?
   title           String
   description     String
   content         String

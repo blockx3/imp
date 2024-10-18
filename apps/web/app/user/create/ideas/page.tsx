@@ -22,8 +22,8 @@ function CreateIdea() {
     setContent(content);
   }
   return (
-    <div className="bg-neutral-800 lg:grid lg:grid-cols-3">
-      <div className="lg:col-span-1 bg-neutral-700 h-fit m-4 p-2 rounded-sm text-neutral-300">
+    <div className="bg-black lg:grid lg:grid-cols-3">
+      <div className="lg:col-span-1 bg-neutral-800 h-fit m-4 p-2 rounded-sm text-neutral-300">
         <span className="text-xl font-bold underline underline-offset-4">
           Node:
         </span>
@@ -31,7 +31,7 @@ function CreateIdea() {
       </div>
       <div className="min-h-screen w-full mx-auto space-y-4 lg:col-span-2 p-4">
         <MdxeditorComponent
-          ClassName="bg-slate-50 mx-auto min-h-[400px] rounded-sm"
+          ClassName="bg-white mx-auto min-h-[400px] rounded-sm"
           onChange={HandleChange}
         />
         {loading ? (

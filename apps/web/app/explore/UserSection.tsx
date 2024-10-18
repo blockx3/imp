@@ -1,10 +1,10 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function UserSection() {
   return (
-    <div className="p-4 flex items-center justify-between border-b-2 border-neutral-600/80">
+    <div className="p-4 flex items-center justify-between border-b-2 border-neutral-800">
       <Avatar>
         <AvatarImage src="https://github.com/shadcn.png" />
         <AvatarFallback>CN</AvatarFallback>
