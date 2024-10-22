@@ -27,14 +27,29 @@ function PostElement({ idea }: { idea: idea }) {
             </div>
             <div className="text-xl"># {idea.serial_number}</div>
           </div>
-          <PostActions />
+          <PostActions
+            // TODO: pass the author detail from login session
+            post_details={{
+              post_id: idea.id,
+              author_user_id: "",
+              author_username: "",
+            }}
+            post_status={{
+              upvotes: idea.upvotes_count,
+              downvotes: idea.downvotes_count,
+              comments: 101,
+            }}
+          />
         </div>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
           <DialogTitle># {idea.serial_number}</DialogTitle>
         </DialogHeader>
-        <MdxViewer markdown={idea.content} className="bg-white" />
+        <MdxViewer
+          markdown={idea.content}
+          className="bg-white prose max-w-none"
+        />
       </DialogContent>
     </Dialog>
   );

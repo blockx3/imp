@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 // import "@repo/ui/css"; // This is needed only if the importing project is not using shadcn ui
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

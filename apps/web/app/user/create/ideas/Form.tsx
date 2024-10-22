@@ -5,20 +5,28 @@ import { Loader2 } from "lucide-react";
 import { useRef, useState } from "react";
 import { MDXEditorMethods } from "@repo/ui/mdxeditor";
 import { MdxEditorComponent } from "@/components/MdxEditorComponent";
+import { useToast } from "@/hooks/use-toast";
 function IdeaCreationForm() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { toast } = useToast();
   const mdx_ref = useRef<MDXEditorMethods>(null);
   async function HandleSubmit() {
     setLoading(true);
     const res = await CreateIdeaPost({ content });
     setLoading(false);
-    if (res) {
+    if (res.success) {
       mdx_ref.current?.setMarkdown("# Idea Submitted You can write more");
       setContent("");
+      setError("");
+      toast({
+        title: "Success !!",
+        description:
+          "Idea has been created successfully, you can view in your profiles",
+      });
     } else {
-      console.log("Failed");
+      setError("Failed to submit idea, Try Again !!");
     }
   }
 
