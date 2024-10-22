@@ -38,6 +38,8 @@ export async function CreateIdeaPost({ content }: { content: string }) {
   try {
     await MONGO_PRISMA_CLIENT.idea.create({
       data: {
+        // TODO: add logic to auto-increment the serial number
+        serial_number: 1221,
         title: "",
         description: "",
         author_username: "",

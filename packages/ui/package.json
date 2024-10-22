@@ -2,18 +2,22 @@
   "name": "@repo/ui",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsup src/index.tsx --minify --dts --out-dir dist",
-    "dev": "tsup src/index.tsx --watch --dts --out-dir dist"
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.cjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./css": {
       "import": "./dist/index.css",
       "require": "./dist/index.css"
+    },
+    "./mdxeditor": {
+      "import": "./dist/mdxeditor/mdxeditor.js",
+      "require": "./dist/mdxeditor/mdxeditor.js"
     }
   },
   "author": "",
@@ -25,7 +29,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
-    "tsup": "^8.3.0"
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "@mdxeditor/editor": "^3.14.0",
@@ -35,6 +39,7 @@
     "lucide-react": "^0.452.0",
     "react": "18.3.1",
     "tailwind-merge": "^2.5.3",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tsup": "^8.3.0"
   }
 }

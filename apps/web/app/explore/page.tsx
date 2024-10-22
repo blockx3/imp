@@ -10,9 +10,7 @@ async function Explore() {
         <UserSection />
         <div className="flex justify-center">
           <Link href={"/user/create/ideas"} className="mt-4">
-            <Button variant={"secondary"} className="text-lg">
-              Launch 🚀
-            </Button>
+            <Button className="text-lg">Launch 🚀</Button>
           </Link>
         </div>
       </div>

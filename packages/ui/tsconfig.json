@@ -13,5 +13,9 @@
         "./*"
       ]
     }
-  }
+  },
+  "include": [
+    "src/*",
+    "src/components/MdxEditor/*"
+  ]
 }

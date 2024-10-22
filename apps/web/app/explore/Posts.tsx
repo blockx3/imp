@@ -4,8 +4,8 @@ async function Explore_PostList() {
   const posts = await MONGO_PRISMA_CLIENT.idea.findMany();
   return (
     <>
-      {posts.map((data) => {
-        return <PostElement key={data.id} content={data.content} />;
+      {posts.map((idea_data) => {
+        return <PostElement key={idea_data.id} idea={idea_data} />;
       })}
     </>
   );

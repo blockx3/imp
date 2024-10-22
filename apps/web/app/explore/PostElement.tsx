@@ -7,18 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import MdxviewerComponent from "@/components/MdxViewer";
 import PostActions from "@/components/ui/PostActions";
-
-function PostElement({
-  title,
-  description,
-  content,
-}: {
-  title?: string;
-  description?: string;
-  content: string;
-}) {
+import { idea } from "@repo/database";
+import { MdxViewer } from "@repo/ui/mdxeditor";
+function PostElement({ idea }: { idea: idea }) {
   return (
     <Dialog>
       <DialogTrigger>
@@ -33,16 +25,16 @@ function PostElement({
               eveniet iure unde, praesentium adipisci expedita voluptatum
               corporis error eius.
             </div>
-            <div className="text-xl"># 5454</div>
+            <div className="text-xl"># {idea.serial_number}</div>
           </div>
           <PostActions />
         </div>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle># 334</DialogTitle>
+          <DialogTitle># {idea.serial_number}</DialogTitle>
         </DialogHeader>
-        <MdxviewerComponent content={content} />
+        <MdxViewer markdown={idea.content} className="bg-white" />
       </DialogContent>
     </Dialog>
   );

@@ -1,2 +1,4 @@
 import "./global.css";
-export { Mdxeditor, MdxViewer } from "@/src/components/MdxEditor/MdxComponent";
+export function add() {
+  console.log("d");
+}
