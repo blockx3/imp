@@ -8,6 +8,9 @@
     "prisma:generate": "prisma generate --schema ./prisma/schema_mongo.prisma & prisma generate --schema ./prisma/schema_pg.prisma",
     "prisma:migrate:pg": "prisma migrate dev --schema ./prisma/schema_pg.prisma"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "prisma": "^5.20.0",
+    "ts-node": "^10.9.2",
     "tsup": "^8.3.0"
   }
 }

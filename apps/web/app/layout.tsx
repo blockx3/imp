@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 // import "@repo/ui/css"; // This is needed only if the importing project is not using shadcn ui
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-
+import ContextProviders from "@/components/ContextProviders";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -27,15 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ContextProviders>
           {children}
           <Toaster />
-        </ThemeProvider>
+        </ContextProviders>
       </body>
     </html>
   );

@@ -25,6 +25,7 @@ model idea {
   media           Json?
   upvotes_count   Int             @default(0)
   downvotes_count Int             @default(0)
+  comment_count   Int             @default(0)
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
   idea_comments   idea_comments[]

@@ -34,7 +34,7 @@ function IdeaCreationForm() {
     setContent(content);
   }
   return (
-    <div className="w-full mx-auto space-y-4 lg:col-span-2 p-4">
+    <div className="w-full max-w-4xl mx-auto space-y-4 lg:col-span-2 p-4">
       <MdxEditorComponent
         onChange={HandleChange}
         markdown=""

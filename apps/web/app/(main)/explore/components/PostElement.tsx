@@ -13,18 +13,13 @@ import { MdxViewer } from "@repo/ui/mdxeditor";
 function PostElement({ idea }: { idea: idea }) {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger className="w-full">
         <div className="m-2 flex items-center gap-2 p-3 text-start hover:bg-zinc-900 bg-zinc-800/50 text-neutral-400 rounded-lg">
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             <div className="font-bold text-3xl underline underline-offset-4">
-              Title
+              {idea.title}
             </div>
-            <div className="text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis,
-              iste amet sint sequi voluptate velit. Esse eum repellat, et vero,
-              eveniet iure unde, praesentium adipisci expedita voluptatum
-              corporis error eius.
-            </div>
+            <div className="text-lg">{idea.description}</div>
             <div className="text-xl"># {idea.serial_number}</div>
           </div>
           <PostActions
