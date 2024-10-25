@@ -35,8 +35,8 @@ function PostActions({
           setUpvoteLoading(true);
           const res = await UpvoteIdeaPost({
             ideaId: post_details.post_id,
-            author_user_id: "string",
-            author_username: "string",
+            author_user_id: "1",
+            author_username: "user1",
           });
           if (res.success) {
             toast({
@@ -80,8 +80,8 @@ function PostActions({
           setDownVoteLoading(true);
           const res = await DownvoteIdeaPost({
             ideaId: post_details.post_id,
-            author_user_id: "string",
-            author_username: "string",
+            author_user_id: "1",
+            author_username: "user1",
           });
           if (res.success) {
             toast({

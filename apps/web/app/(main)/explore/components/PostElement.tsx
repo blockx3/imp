@@ -14,7 +14,7 @@ function PostElement({ idea }: { idea: idea }) {
   return (
     <Dialog>
       <DialogTrigger className="w-full">
-        <div className="m-2 flex items-center gap-2 p-3 text-start hover:bg-zinc-900 bg-zinc-800/50 text-neutral-400 rounded-lg">
+        <div className="m-2 flex items-center gap-2 p-2 text-start hover:bg-zinc-900 bg-zinc-800/50 text-neutral-400 rounded-lg">
           <div className="space-y-2 w-full">
             <div className="font-bold text-3xl underline underline-offset-4">
               {idea.title}

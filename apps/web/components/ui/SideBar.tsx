@@ -15,13 +15,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion@sidebar";
-import UserSection from "@/app/(main)/explore/components/UserSection";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./button";
 
 function SideBar() {
   return (
     <>
-      <UserSection />
+      <div className="p-4 flex items-center justify-between border-b-2 border-neutral-800">
+        <Avatar>
+          <AvatarImage src="https://static.aaraz.me/blockx3/imp/logo.png" />
+          <AvatarFallback>IMP</AvatarFallback>
+        </Avatar>
+        <div className="flex-1 text-center text-xl font-bold">IMP</div>
+      </div>
       <div className="flex justify-center lg:my-4">
         <Link href={"/create/ideas"} className="">
           <Button className="text-lg">Launch 🚀</Button>
