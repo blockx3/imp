@@ -22,10 +22,12 @@ function SideBar() {
   return (
     <>
       <div className="p-4 flex items-center justify-between border-b-2 border-neutral-800">
-        <Avatar>
-          <AvatarImage src="https://static.aaraz.me/blockx3/imp/logo.png" />
-          <AvatarFallback>IMP</AvatarFallback>
-        </Avatar>
+        <Link href={"/"}>
+          <Avatar>
+            <AvatarImage src="https://static.aaraz.me/blockx3/imp/logo.png" />
+            <AvatarFallback>IMP</AvatarFallback>
+          </Avatar>
+        </Link>
         <div className="flex-1 text-center text-xl font-bold">IMP</div>
       </div>
       <div className="flex justify-center lg:my-4">
@@ -35,8 +37,8 @@ function SideBar() {
       </div>
       <div className="lg:space-y-2">
         <Link
-          href="/user"
-          // bg-neutral-800 , Apply this bg on the link which is active
+          href="/user?ideas_to_show=myideas"
+          // TODO: bg-neutral-800 , Apply this bg on the link which is active
           className="flex items-center p-2 rounded-lg bg-neutral-900 hover:bg-neutral-800  mx-2 group"
         >
           <CircleUserRoundIcon className="group-hover:opacity-100 opacity-50" />

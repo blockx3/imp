@@ -4,13 +4,16 @@ import IdeasList from "./IdeasList";
 import { UserIdeaType } from "@/lib/types";
 import IdeasSkeletons from "@/components/AllSkeletons";
 import { Suspense } from "react";
+import { permanentRedirect } from "next/navigation";
 async function User({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const ideas_to_show = (await searchParams).ideas_to_show as UserIdeaType;
-
+  if (!ideas_to_show) {
+    permanentRedirect("/user?ideas_to_show=myideas");
+  }
   return (
     <div className="">
       <div className="bg-neutral-800/80 p-8 flex items-center">
@@ -30,7 +33,8 @@ async function User({
         <UserIdeasPicker ideas_to_show={ideas_to_show as string} />
       </div>
       <Suspense fallback={<IdeasSkeletons count={4} />}>
-        <IdeasList Ideas_type={ideas_to_show} userId="2" />
+        {/* TODO: Use userid from session */}
+        <IdeasList Ideas_type={ideas_to_show} userId="1" />
       </Suspense>
     </div>
   );

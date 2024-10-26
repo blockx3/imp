@@ -1,5 +1,11 @@
 "use server";
 
+import { Redis_client } from "@/lib/redis";
+import { $Enums, MONGO_PRISMA_CLIENT } from "@repo/database";
+import { revalidatePath } from "next/cache";
+
+// TODO: Make the Redis_client.del() function to delete specific idea key from redis cache
+
 // Authentication is disabled for now
 // import { auth } from "@/auth";
 
@@ -24,8 +30,6 @@ const session = await auth();
   }
 
 */
-import { $Enums, MONGO_PRISMA_CLIENT } from "@repo/database";
-import { revalidatePath } from "next/cache";
 export async function CreateIdeaPost({ content }: { content: string }) {
   // TODO: Enable protection
   //   const session = await auth();
@@ -42,11 +46,13 @@ export async function CreateIdeaPost({ content }: { content: string }) {
         serial_number: 1221,
         title: "",
         description: "",
-        author_username: "",
+        author_username: "1",
         author_user_Id: "",
         content: content,
       },
     });
+    // TODO: use uder ID from the session variable
+    await Redis_client.del("user:" + "1" + ":ideas:" + "myideas");
     return {
       success: true,
       message: "Idea Created",
@@ -119,6 +125,9 @@ export async function UpvoteIdeaPost({
         });
       });
       revalidatePath("/explore");
+      // TODO: use uder ID from the session variable
+      await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
+      await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
       return PositiveResponce;
     } catch (error) {
       return NegativeResponce;
@@ -147,6 +156,9 @@ export async function UpvoteIdeaPost({
       });
     });
     revalidatePath("/explore");
+    // TODO: use uder ID from the session variable
+    await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
+    await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
     return PositiveResponce;
   } catch (error) {
     return NegativeResponce;
@@ -213,6 +225,9 @@ export async function DownvoteIdeaPost({
         });
       });
       revalidatePath("/explore");
+      // TODO: use uder ID from the session variable
+      await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
+      await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
       return PositiveResponce;
     } catch (error) {
       return NegativeResponce;
@@ -241,6 +256,9 @@ export async function DownvoteIdeaPost({
       });
     });
     revalidatePath("/explore");
+    // TODO: use uder ID from the session variable
+    await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
+    await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
     return PositiveResponce;
   } catch (error) {
     return NegativeResponce;
