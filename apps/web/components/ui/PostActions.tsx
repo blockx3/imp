@@ -1,5 +1,5 @@
 "use client";
-import { DownvoteIdeaPost, UpvoteIdeaPost } from "@/app/actions/mongo";
+import { DownvoteIdeaPost, UpvoteIdeaPost } from "@/app/actions/pg";
 import { useToast } from "@/hooks/use-toast";
 import { ChevronUp, ChevronDown, MessagesSquare, Loader2 } from "lucide-react";
 import { useState } from "react";

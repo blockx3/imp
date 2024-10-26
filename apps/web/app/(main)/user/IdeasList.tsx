@@ -1,6 +1,6 @@
 import { Redis_client } from "@/lib/redis";
 import { idea, UserIdeaType } from "@/lib/types";
-import { MONGO_PRISMA_CLIENT } from "@repo/database";
+import { PG_PRISMA_CLIENT } from "@repo/database";
 import PostElement from "../explore/components/PostElement";
 
 async function IdeasList({
@@ -30,7 +30,7 @@ async function IdeasList({
     console.log("fetching from database");
     switch (Ideas_type) {
       case "myideas":
-        ideas = await MONGO_PRISMA_CLIENT.idea.findMany({
+        ideas = await PG_PRISMA_CLIENT.idea.findMany({
           where: {
             author_user_Id: userId,
           },
@@ -38,15 +38,14 @@ async function IdeasList({
         break;
       case "upvoted":
         {
-          const res = await MONGO_PRISMA_CLIENT.voteaction.findMany({
+          const res = await PG_PRISMA_CLIENT.idea_vote_actions.findMany({
             where: {
               author_user_Id: userId,
-              POST_TYPE: "COMMON_POST",
               voteaction_type: "UPVOTE",
             },
           });
           for (let i = 0; i < res.length; i++) {
-            const idea = await MONGO_PRISMA_CLIENT.idea.findUnique({
+            const idea = await PG_PRISMA_CLIENT.idea.findUnique({
               where: {
                 id: res[i]?.ideaId as string,
               },
@@ -57,15 +56,14 @@ async function IdeasList({
         break;
       case "downvoted":
         {
-          const res = await MONGO_PRISMA_CLIENT.voteaction.findMany({
+          const res = await PG_PRISMA_CLIENT.idea_vote_actions.findMany({
             where: {
               author_user_Id: userId,
-              POST_TYPE: "COMMON_POST",
               voteaction_type: "DOWNVOTE",
             },
           });
           for (let i = 0; i < res.length; i++) {
-            const idea = await MONGO_PRISMA_CLIENT.idea.findUnique({
+            const idea = await PG_PRISMA_CLIENT.idea.findUnique({
               where: {
                 id: res[i]?.ideaId as string,
               },

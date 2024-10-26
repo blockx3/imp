@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/mongo_client";
+import { PrismaClient } from "@prisma/pg_client";
 const prisma = new PrismaClient();
 async function main() {
   await prisma.idea.createMany({

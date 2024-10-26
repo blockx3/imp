@@ -14,58 +14,7 @@ datasource db {
   url      = env("MONGODB_DATABASE_URL")
 }
 
-model idea {
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
-  serial_number   Int
-  title           String
-  description     String
-  content         String
-  author_username String
-  author_user_Id  String
-  media           Json?
-  upvotes_count   Int             @default(0)
-  downvotes_count Int             @default(0)
-  comment_count   Int             @default(0)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  idea_comments   idea_comments[]
-  voteaction      voteaction[]
-}
-
-model idea_comments {
-  id              String       @id @default(auto()) @map("_id") @db.ObjectId
-  author_username String
-  author_user_Id  String
-  content         String
-  upvotes_count   Int          @default(0)
-  downvotes_count Int          @default(0)
-  media           Json?
-  idea            idea         @relation(fields: [ideaId], references: [id])
-  ideaId          String       @db.ObjectId
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  voteaction      voteaction[]
-}
-
-enum POST_TYPE {
-  COMMON_POST
-  COMMENT_POST
-}
-
-enum voteaction_type {
-  UPVOTE
-  DOWNVOTE
-}
-
-model voteaction {
-  id              String          @id @default(auto()) @map("_id") @db.ObjectId
-  author_username String
-  author_user_Id  String
-  POST_TYPE       POST_TYPE
-  voteaction_type voteaction_type
-  createdAt       DateTime        @default(now())
-  idea            idea?           @relation(fields: [ideaId], references: [id])
-  ideaId          String?         @db.ObjectId
-  comment         idea_comments?  @relation(fields: [commentId], references: [id])
-  commentId       String?         @db.ObjectId
+model test_model {
+  id   String @id @default(cuid()) @map("_id")
+  name String
 }

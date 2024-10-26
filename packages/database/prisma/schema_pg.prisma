@@ -83,3 +83,55 @@ model Authenticator {
 
   @@id([userId, credentialID])
 }
+
+model idea {
+  id                String              @id @default(cuid())
+  serial_number     Int                 @default(autoincrement())
+  title             String
+  description       String
+  content           String
+  author_username   String
+  author_user_Id    String
+  media             Json?
+  upvotes_count     Int                 @default(0)
+  downvotes_count   Int                 @default(0)
+  comment_count     Int                 @default(0)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  idea_comments     idea_comments[]
+  idea_vote_actions idea_vote_actions[]
+}
+
+model idea_comments {
+  id              String   @id @default(cuid())
+  author_username String
+  author_user_Id  String
+  content         String
+  upvotes_count   Int      @default(0)
+  downvotes_count Int      @default(0)
+  media           Json?
+  idea            idea     @relation(fields: [ideaId], references: [id])
+  ideaId          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum POST_TYPE {
+  COMMON_POST
+  COMMENT_POST
+}
+
+enum voteaction_type {
+  UPVOTE
+  DOWNVOTE
+}
+
+model idea_vote_actions {
+  id              String          @id @default(cuid())
+  author_username String
+  author_user_Id  String
+  voteaction_type voteaction_type
+  createdAt       DateTime        @default(now())
+  idea            idea            @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  ideaId          String
+}
