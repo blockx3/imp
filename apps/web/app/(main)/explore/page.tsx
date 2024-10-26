@@ -3,7 +3,7 @@ import Explore_PostList from "./components/Posts";
 async function Explore() {
   return (
     <div className="lg:grid grid-cols-3">
-      <div className="lg:col-span-2 border-r-2 border-neutral-800 max-h-screen overflow-auto no-scrollbar ">
+      <div className="lg:col-span-2 border-r-2 h-screen border-neutral-800 max-h-screen overflow-auto no-scrollbar ">
         {/* TODO: add suspence */}
         <Explore_PostList />
         <div className="sticky w-full h-[15vh] bottom-0 bg-gradient-to-t from-[#000000]"></div>

@@ -30,7 +30,15 @@ const session = await auth();
   }
 
 */
-export async function CreateIdeaPost({ content }: { content: string }) {
+export async function CreateIdeaPost({
+  title,
+  description,
+  content,
+}: {
+  content: string;
+  title: string;
+  description: string;
+}) {
   // TODO: Enable protection
   //   const session = await auth();
   //   if (!session) {
@@ -44,8 +52,8 @@ export async function CreateIdeaPost({ content }: { content: string }) {
       data: {
         // TODO: add logic to auto-increment the serial number
         serial_number: 1221,
-        title: "",
-        description: "",
+        title: title,
+        description: description,
         author_username: "1",
         author_user_Id: "",
         content: content,
