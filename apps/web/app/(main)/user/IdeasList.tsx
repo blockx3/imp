@@ -1,7 +1,7 @@
 import { Redis_client } from "@/lib/redis";
 import { idea, UserIdeaType } from "@/lib/types";
 import { PG_PRISMA_CLIENT } from "@repo/database";
-import PostElement from "../explore/components/PostElement";
+import PostElement from "../explore/feed/components/PostElement";
 
 async function IdeasList({
   userId,
@@ -18,14 +18,14 @@ async function IdeasList({
     );
   }
   let ideas: idea[] = [];
-  const Rres = await Redis_client.lRange(
-    "user:" + userId + ":ideas:" + Ideas_type,
-    0,
-    -1
-  );
-  Rres.map((d) => {
-    ideas.push(JSON.parse(d));
-  });
+  // const Rres = await Redis_client.lRange(
+  //   "user:" + userId + ":ideas:" + Ideas_type,
+  //   0,
+  //   -1
+  // );
+  // Rres.map((d) => {
+  //   ideas.push(JSON.parse(d));
+  // });
   if (ideas.length === 0) {
     console.log("fetching from database");
     switch (Ideas_type) {
@@ -77,12 +77,12 @@ async function IdeasList({
     }
     // The redis lpush is not awaited because the request already awaited for getting data from database and
     // if we await on writing to redis too , it will cause the response to be a lot slow
-    ideas.map((idea) => {
-      Redis_client.lPush(
-        "user:" + userId + ":ideas:" + Ideas_type,
-        JSON.stringify(idea)
-      );
-    });
+    // ideas.map((idea) => {
+    //   Redis_client.lPush(
+    //     "user:" + userId + ":ideas:" + Ideas_type,
+    //     JSON.stringify(idea)
+    //   );
+    // });
   }
   return (
     <div className="">

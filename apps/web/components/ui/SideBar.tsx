@@ -7,6 +7,7 @@ import {
   Cog,
   PackagePlus,
   Search,
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -45,11 +46,18 @@ function SideBar() {
           <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
         </Link>
         <Link
-          href="/explore"
+          href="/explore/feed"
           className="flex items-center p-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 mx-2 group"
         >
           <Search className="group-hover:opacity-100 opacity-50" />
           <span className="flex-1 ms-3 whitespace-nowrap">Explore</span>
+        </Link>
+        <Link
+          href="/explore/peoples"
+          className="flex items-center p-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 mx-2 group"
+        >
+          <Users className="group-hover:opacity-100 opacity-50" />
+          <span className="flex-1 ms-3 whitespace-nowrap">Find Peoples</span>
         </Link>
         {/* <Accordion type="single" collapsible className="mx-2">
           <AccordionItem value="item-1">

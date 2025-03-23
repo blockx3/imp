@@ -15,18 +15,24 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                String          @id @default(cuid())
+  name              String?
+  email             String          @unique
+  emailVerified     DateTime?
+  image             String?
+  following         Int             @default(0)
+  following_data_id String? // stored in mongoDB
+  followers         Int             @default(0)
+  followers_data_id String? // stored in mongoDB
+  accounts          Account[]
+  sessions          Session[]
   // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  Authenticator     Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  idea_comments idea_comments[]
+  idea          idea[]
 }
 
 model Account {
@@ -90,7 +96,7 @@ model idea {
   title             String
   description       String
   content           String
-  author_username   String
+  user              User                @relation(fields: [author_user_Id], references: [id])
   author_user_Id    String
   media             Json?
   upvotes_count     Int                 @default(0)
@@ -104,7 +110,7 @@ model idea {
 
 model idea_comments {
   id              String   @id @default(cuid())
-  author_username String
+  user            User     @relation(fields: [author_user_Id], references: [id])
   author_user_Id  String
   content         String
   upvotes_count   Int      @default(0)

@@ -1,5 +1,7 @@
 "use server";
 
+import { auth } from "@/auth";
+import { mongo_client } from "@/lib/mongodb";
 import { Redis_client } from "@/lib/redis";
 import { PG_PRISMA_CLIENT } from "@repo/database";
 import { revalidatePath } from "next/cache";
@@ -39,28 +41,30 @@ export async function CreateIdeaPost({
   title: string;
   description: string;
 }) {
-  // TODO: Enable protection
-  //   const session = await auth();
-  //   if (!session) {
-  //     return {
-  //       success: false,
-  //       message: "Unauthorized",
-  //     };
-  //   }
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
   try {
+    const user = await PG_PRISMA_CLIENT.user.findUnique({
+      where: {
+        email: session?.user?.email as string,
+      },
+    });
     await PG_PRISMA_CLIENT.idea.create({
       data: {
         // TODO: add logic to auto-increment the serial number
         serial_number: 1221,
         title: title,
         description: description,
-        author_username: "1",
-        author_user_Id: "",
+        author_user_Id: user?.id as string,
         content: content,
       },
     });
     // TODO: use uder ID from the session variable
-    await Redis_client.del("user:" + "1" + ":ideas:" + "myideas");
     return {
       success: true,
       message: "Idea Created",
@@ -133,8 +137,6 @@ export async function UpvoteIdeaPost({
       });
       revalidatePath("/explore");
       // TODO: use uder ID from the session variable
-      await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
-      await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
       return PositiveResponce;
     } catch (error) {
       return NegativeResponce;
@@ -163,8 +165,6 @@ export async function UpvoteIdeaPost({
     });
     revalidatePath("/explore");
     // TODO: use uder ID from the session variable
-    await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
-    await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
     return PositiveResponce;
   } catch (error) {
     return NegativeResponce;
@@ -231,8 +231,6 @@ export async function DownvoteIdeaPost({
       });
       revalidatePath("/explore");
       // TODO: use uder ID from the session variable
-      await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
-      await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
       return PositiveResponce;
     } catch (error) {
       return NegativeResponce;
@@ -261,10 +259,94 @@ export async function DownvoteIdeaPost({
     });
     revalidatePath("/explore");
     // TODO: use uder ID from the session variable
-    await Redis_client.del("user:" + "1" + ":ideas:" + "downvoted");
-    await Redis_client.del("user:" + "1" + ":ideas:" + "upvoted");
     return PositiveResponce;
   } catch (error) {
     return NegativeResponce;
   }
+}
+
+export async function FollowUser({
+  toFollowUserId,
+}: {
+  toFollowUserId: String;
+}) {
+  const session = await auth();
+  const ToFollowUserFollowingDataId = await PG_PRISMA_CLIENT.user.findUnique({
+    where: {
+      id: toFollowUserId as string,
+    },
+  });
+  const CurrentUserFollowingDataId = await PG_PRISMA_CLIENT.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+  });
+  if (
+    !CurrentUserFollowingDataId?.following_data_id ||
+    !CurrentUserFollowingDataId?.followers_data_id
+  ) {
+    mongo_client
+      .db("follow_data")
+      .createCollection(
+        (CurrentUserFollowingDataId?.id + "followers") as string
+      );
+    mongo_client
+      .db("follow_data")
+      .createCollection(
+        (CurrentUserFollowingDataId?.id + "following") as string
+      );
+    await PG_PRISMA_CLIENT.user.update({
+      where: {
+        id: CurrentUserFollowingDataId?.id as string,
+      },
+      data: {
+        followers_data_id: (CurrentUserFollowingDataId?.id +
+          "followers") as string,
+        following_data_id: (CurrentUserFollowingDataId?.id +
+          "following") as string,
+      },
+    });
+  }
+
+  const db = mongo_client.db("follow_data");
+  const collection = db.collection(
+    CurrentUserFollowingDataId?.id + "following"
+  );
+  const query = { email: session?.user?.email as string };
+  const update = {
+    $setOnInsert: {
+      email: ToFollowUserFollowingDataId?.email,
+      id: ToFollowUserFollowingDataId?.id,
+    },
+  };
+  const options = { upsert: true };
+  // TODO: update the follower data to whome this user followed
+  const result = await collection.updateOne(query, update, options);
+  return {
+    success: true,
+    message: "Followed",
+  };
+}
+
+export async function Unfollow({
+  toUnFollowUserId,
+}: {
+  toUnFollowUserId: String;
+}) {
+  const session = await auth();
+  const ToFollowUserFollowingDataId = await PG_PRISMA_CLIENT.user.findUnique({
+    where: {
+      id: toUnFollowUserId as string,
+    },
+  });
+  const CurrentUserFollowingDataId = await PG_PRISMA_CLIENT.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+  });
+
+  mongo_client
+    .db("follow_data")
+    .collection(CurrentUserFollowingDataId?.id + "following")
+    .deleteOne({ email: ToFollowUserFollowingDataId?.email });
 }

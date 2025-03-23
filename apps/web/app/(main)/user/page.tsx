@@ -5,6 +5,8 @@ import { UserIdeaType } from "@/lib/types";
 import IdeasSkeletons from "@/components/AllSkeletons";
 import { Suspense } from "react";
 import { permanentRedirect } from "next/navigation";
+import { auth } from "@/auth";
+import { PG_PRISMA_CLIENT } from "@repo/database";
 async function User({
   searchParams,
 }: {
@@ -14,6 +16,12 @@ async function User({
   if (!ideas_to_show) {
     permanentRedirect("/user?ideas_to_show=myideas");
   }
+  const session = await auth();
+  const user = await PG_PRISMA_CLIENT.user.findUnique({
+    where: {
+      email: session?.user?.email as string,
+    },
+  });
   return (
     <div className="">
       <div className="bg-neutral-800/80 p-8 flex items-center">
@@ -24,8 +32,8 @@ async function User({
         <div className="flex-1 px-10 space-y-2">
           <div className="text-4xl font-bold">Anish Araz</div>
           <div className="flex gap-2">
-            <div className="text-green-400">Followers: 121</div>
-            <div className="text-amber-300">Ideas Posted: 121</div>
+            <div className="text-green-400">Followers: {user?.followers}</div>
+            <div className="text-amber-300">Ideas Posted: {"0"}</div>
           </div>
         </div>
       </div>

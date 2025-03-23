@@ -1,5 +1,5 @@
 "use client";
-import { CreateIdeaPost } from "@/app/actions/mongo";
+import { CreateIdeaPost } from "@/app/actions/pg";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useRef, useState } from "react";
