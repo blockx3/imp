@@ -7,6 +7,7 @@ import { useState } from "react";
 function PostActions({
   post_details,
   post_status,
+  toggleComment,
 }: {
   post_details: {
     post_id: string;
@@ -18,6 +19,7 @@ function PostActions({
     downvotes: number;
     comments: number;
   };
+  toggleComment: () => void;
 }) {
   const [downVoteLoading, setDownVoteLoading] = useState(false);
   const [upvoteLoading, setUpvoteLoading] = useState(false);
@@ -64,6 +66,7 @@ function PostActions({
         className="hover:bg-zinc-800 p-1 rounded-sm flex flex-col items-center"
         onClick={async (e) => {
           e.stopPropagation();
+          toggleComment();
         }}
       >
         <MessagesSquare />
