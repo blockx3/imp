@@ -350,3 +350,17 @@ export async function Unfollow({
     .collection(CurrentUserFollowingDataId?.id + "following")
     .deleteOne({ email: ToFollowUserFollowingDataId?.email });
 }
+
+export async function comment({
+  post_id,
+  comment,
+}: {
+  post_id: string;
+  comment: string;
+}) {
+  mongo_client.db("comment").collection("comment").insertOne({
+    post_id: post_id,
+    comment: comment,
+  });
+  return;
+}
